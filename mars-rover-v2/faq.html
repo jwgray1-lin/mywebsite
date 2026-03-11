@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mars Rover FAQ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script defer src="assets/js/faq.js"></script>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header" role="banner">
+    <div class="header-bg"></div>
+    <div class="header-top">
+      <div class="branding">
+        <img src="assets/img/nasa-logo.svg" alt="NASA logo" class="logo">
+        <div class="title-group">
+          <h1>Mars Rovers</h1>
+          <p class="tagline">Exploring the Red Planet</p>
+        </div>
+      </div>
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle dark mode">🌗</button>
+    </div>
+    <nav class="main-nav" role="navigation" aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="mission-history.html">Mission History</a></li>
+        <li><a href="faq.html" aria-current="page">FAQ</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content" class="site-main" role="main">
+    <section class="faq" aria-labelledby="faq-heading">
+      <h2 id="faq-heading">Frequently Asked Questions</h2>
+      <p id="assistant-ready" class="small-print" aria-live="polite">Assistant initializing…</p>
+      <details>
+        <summary>What is a Mars rover?</summary>
+        <p>A Mars rover is a robotic vehicle designed to move across the Martian surface and carry scientific instruments to study rocks, soil, atmosphere, and signs of past habitability.</p>
+      </details>
+      <details>
+        <summary>What does NASA do?</summary>
+        <p>NASA leads U.S. civil space exploration and aeronautics research, including missions like the Mars rovers, space telescopes, and human spaceflight.</p>
+      </details>
+
+      <div class="ask-section" aria-labelledby="ask-heading">
+        <h3 id="ask-heading">Ask the Rover Assistant</h3>
+        <form id="ask-form" class="ask-form" aria-describedby="faq-status">
+          <label class="visually-hidden" for="question-input">Your question</label>
+          <textarea id="question-input" name="question" rows="3" placeholder="Type your question about NASA, Mars, or the rovers..."></textarea>
+          <div class="ask-actions">
+            <button type="submit" class="btn">Ask</button>
+            <button type="button" id="clear-qa" class="btn alt">Clear</button>
+          </div>
+          <p id="faq-status" aria-live="polite">Status: ready</p>
+        </form>
+        <div id="qa-feed" class="qa-feed" aria-live="polite" aria-relevant="additions"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-content">
+      <p class="small-print">Images and mission data adapted from NASA public domain resources.</p>
+      <div class="footer-bar">
+        <span class="copyright">© 2025 John Gray</span>
+        <span class="separator">|</span>
+        <span class="disclaimer">Educational Project</span>
+        <a class="back-to-top" href="#top" aria-label="Back to top">↑ Top</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const toggleButton = document.querySelector('.theme-toggle');
+    const body = document.body;
+    if (toggleButton) {
+      toggleButton.addEventListener('click', () => {
+        const isDark = body.classList.toggle('dark-mode');
+        toggleButton.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+      });
+    }
+
+    // Show assistant readiness once script runs
+    const readyEl = document.getElementById('assistant-ready');
+    function markReady(){ if(readyEl){ readyEl.textContent = 'Assistant ready'; } }
+    if (window.MarsFaq && window.MarsFaq.ready) { markReady(); }
+    // Poll briefly in case defer script loads a moment later
+    setTimeout(()=>{ if (window.MarsFaq && window.MarsFaq.ready) { markReady(); } }, 200);
+  </script>
+</body>
+</html>

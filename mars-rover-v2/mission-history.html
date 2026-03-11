@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mars Rover Mission History</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body id="top">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header" role="banner">
+    <div class="header-bg"></div>
+    <div class="header-top">
+      <div class="branding">
+        <img src="assets/img/nasa-logo.svg" alt="NASA logo" class="logo">
+        <div class="title-group">
+          <h1>Mars Rovers</h1>
+          <p class="tagline">Exploring the Red Planet</p>
+        </div>
+      </div>
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle dark mode">🌗</button>
+    </div>
+    <nav class="main-nav" role="navigation" aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="mission-history.html" aria-current="page">Mission History</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content" class="site-main" role="main">
+    <section class="history-intro">
+      <h2>Mission History</h2>
+      <p>An overview of major milestones from Sojourner through Perseverance.</p>
+    </section>
+
+    <section class="timeline" aria-labelledby="timeline-heading">
+      <h2 id="timeline-heading" class="visually-hidden">Timeline</h2>
+      <article class="timeline-item">
+        <h3>Sojourner (Mars Pathfinder)</h3>
+        <time datetime="1997-07">1997</time>
+        <p>First successful Mars rover, validating mobile surface exploration.</p>
+      </article>
+      <article class="timeline-item">
+        <h3>Spirit &amp; Opportunity</h3>
+        <time datetime="2004-01">2004</time>
+        <p>Twin MER rovers far exceeded their 90-sol mission plans and found extensive evidence of past water processes.</p>
+      </article>
+      <article class="timeline-item">
+        <h3>Curiosity (MSL)</h3>
+        <time datetime="2012-08">2012</time>
+        <p>Mobile laboratory analyzing Mars' geology and climate in Gale Crater to assess past habitability.</p>
+      </article>
+      <article class="timeline-item">
+        <h3>Perseverance &amp; Ingenuity</h3>
+        <time datetime="2021-02">2021</time>
+        <p>Sample caching in Jezero Crater and technology demonstration of powered flight with Ingenuity.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-content">
+      <p class="small-print">Images and mission data adapted from NASA public domain resources.</p>
+      <div class="footer-bar">
+        <span class="copyright">© 2025 John Gray</span>
+        <span class="separator">|</span>
+        <span class="disclaimer">Educational Project</span>
+        <a class="back-to-top" href="#top" aria-label="Back to top">↑ Top</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const toggleButton = document.querySelector('.theme-toggle');
+    const body = document.body;
+    if (toggleButton) {
+      toggleButton.addEventListener('click', () => {
+        const isDark = body.classList.toggle('dark-mode');
+        toggleButton.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+      });
+    }
+  </script>
+</body>
+</html>

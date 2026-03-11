@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact the Mars Rover Team</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body id="top">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header" role="banner">
+    <div class="header-bg"></div>
+    <div class="header-top">
+      <div class="branding">
+        <img src="assets/img/nasa-logo.svg" alt="NASA logo" class="logo">
+        <div class="title-group">
+          <h1>Mars Rovers</h1>
+          <p class="tagline">Exploring the Red Planet</p>
+        </div>
+      </div>
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle dark mode">🌗</button>
+    </div>
+    <nav class="main-nav" role="navigation" aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="mission-history.html">Mission History</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact.html" aria-current="page">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content" class="site-main" role="main">
+    <section class="contact" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Contact</h2>
+      <p>Send us feedback or report a website issue.</p>
+      <form id="contact-form" class="contact-form" aria-describedby="contact-status">
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" placeholder="Your name" required autocomplete="name">
+
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="you@example.com" required autocomplete="email">
+
+        <label for="topic">Topic</label>
+        <select id="topic" name="topic" required>
+          <option value="" disabled selected>Select a topic</option>
+          <option>General question</option>
+          <option>Report a problem</option>
+          <option>Content suggestion</option>
+        </select>
+
+        <label for="subject">Subject</label>
+        <input id="subject" name="subject" type="text" placeholder="Subject" required minlength="3" maxlength="120">
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="6" placeholder="Your message..." required minlength="5" maxlength="1000" aria-describedby="msg-hint msg-count"></textarea>
+        <small id="msg-hint">Please include enough detail to help us respond.</small>
+        <small id="msg-count">0/1000</small>
+
+        <div class="form-actions">
+          <button type="submit" class="btn" id="send-btn">Send</button>
+          <button type="reset" class="btn alt" id="reset-btn">Clear</button>
+        </div>
+        <p id="contact-status" class="contact-status" aria-live="polite"></p>
+        <p id="mailto-fallback" style="display:none">If your email client didn’t open, <a id="mailto-link" href="#">click here</a>.</p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-content">
+      <p class="small-print">Images and mission data adapted from NASA public domain resources.</p>
+      <div class="footer-bar">
+        <span class="copyright">© 2025 John Gray</span>
+        <span class="separator">|</span>
+        <span class="disclaimer">Educational Project</span>
+        <a class="back-to-top" href="#top" aria-label="Back to top">↑ Top</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const toggleButton = document.querySelector('.theme-toggle');
+    const body = document.body;
+    if (toggleButton) {
+      toggleButton.addEventListener('click', () => {
+        const isDark = body.classList.toggle('dark-mode');
+        toggleButton.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+      });
+    }
+
+    const form = document.getElementById('contact-form');
+    const status = document.getElementById('contact-status');
+    const msg = document.getElementById('message');
+    const msgCount = document.getElementById('msg-count');
+    const sendBtn = document.getElementById('send-btn');
+    const mailtoFallback = document.getElementById('mailto-fallback');
+    const mailtoLink = document.getElementById('mailto-link');
+
+    // Live character counter
+    if (msg && msgCount) {
+      const updateCount = () => {
+        msgCount.textContent = `${msg.value.length}/1000`;
+      };
+      msg.addEventListener('input', updateCount);
+      updateCount();
+    }
+
+    function buildMailto(){
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const topic = document.getElementById('topic').value || 'General question';
+      const subjectRaw = document.getElementById('subject').value.trim() || 'Website Feedback';
+      const subject = `[Mars Rover Site] ${topic} – ${subjectRaw}`;
+      const message = document.getElementById('message').value.trim();
+      const body = `From: ${name}\nEmail: ${email}\nTopic: ${topic}\n\n${message}`;
+      const url = `mailto:jwgray1@ualr.edu?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      return url;
+    }
+
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // Use native validation first
+        if (!form.reportValidity()) {
+          status.textContent = 'Please complete the required fields.';
+          return;
+        }
+        const url = buildMailto();
+        if (sendBtn) sendBtn.disabled = true;
+        status.textContent = 'Opening your email client...';
+        // Set fallback link and show it
+        if (mailtoLink && mailtoFallback) {
+          mailtoLink.href = url;
+          mailtoFallback.style.display = 'block';
+        }
+        // Trigger email client
+        window.location.href = url;
+        setTimeout(() => { if (sendBtn) sendBtn.disabled = false; }, 1200);
+      });
+      // Basic reset handler
+      const resetBtn = document.getElementById('reset-btn');
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          status.textContent = '';
+          if (mailtoFallback) mailtoFallback.style.display = 'none';
+          if (msg) msg.dispatchEvent(new Event('input'));
+        });
+      }
+    }
+  </script>
+</body>
+</html>
